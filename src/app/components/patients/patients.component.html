@@ -1,0 +1,139 @@
+<div class="container-fluid" *ngIf="patients">
+  <div class="row">
+    <div class="col-8">
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+
+            <h3 class="text-center">Zoznam pacientov</h3>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Meno</th>
+                <th>Priezvisko</th>
+                <th>Adresa</th>
+              </tr>
+              </thead>
+              <tbody *ngFor="let patient of patients; let i=index">
+              <tr (click)="showDetail(patient)" style="cursor: pointer">
+                <td>{{i+1}}</td>
+                <td>{{patient.firstName}}</td>
+                <td>{{patient.lastName}}</td>
+                <td>{{patient.address}}</td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <br>
+      <div class="ml-3">
+
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addNewPatient">Pridať pacienta</button>
+      </div>
+      <br>
+      <app-patient-detail [patient]="patient"></app-patient-detail>
+
+    </div>
+  </div>
+
+</div>
+<div class="modal fade" id="addNewPatient" tabindex="-1" role="dialog" aria-labelledby="addNewPatient"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pridať nového pacienta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createPatientForm" (ngSubmit)="create()">
+          <div class="form-group">
+
+            <label for="title">Titul</label>
+            <input type="text" formControlName="title" class="form-control" id="title" placeholder="Titul"
+                   [ngClass]="{ 'is-invalid': submitted && form.title.errors }" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="firstName">Meno:</label>
+            <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="Meno"
+                   [ngClass]="{ 'is-invalid': submitted && form.firstName.errors }" autocomplete="off">
+            <div *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
+              <div *ngIf="form.firstName.errors.required">Krstné meno je povinná položka</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Priezvisko</label>
+            <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Priezvisko"
+                   [ngClass]="{ 'is-invalid': submitted && form.lastName.errors }" autocomplete="off">
+            <div *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
+              <div *ngIf="form.lastName.errors.required">Priezvisko je povinná položka</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Adresa</label>
+            <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresa"
+                   [ngClass]="{ 'is-invalid': submitted && form.address.errors }" autocomplete="off">
+            <div *ngIf="submitted && form.address.errors" class="invalid-feedback">
+              <div *ngIf="form.address.errors.required">Adresa je povinná položka</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="idNum">Rodné číslo</label>
+            <input type="text" class="form-control" id="idNum" formControlName="identificationNum"
+                   [ngClass]="{ 'is-invalid': submitted && form.identificationNum.errors }" placeholder="Rodné číslo"
+                   autocomplete="off">
+            <div *ngIf="submitted && form.identificationNum.errors" class="invalid-feedback">
+              <div *ngIf="form.identificationNum.errors.required">Rodné číslo je povinná položka</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pohlavie">Pohlavie</label>
+            <select class="form-control" id="pohlavie" formControlName="gender"
+                    [ngClass]="{ 'is-invalid': submitted && form.gender.errors }">
+              <option>muž</option>
+              <option>žena</option>
+            </select>
+            <div *ngIf="submitted && form.gender.errors" class="invalid-feedback">
+              <div *ngIf="form.gender.errors.required">Pohlavie je povinná položka</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Rodinný stav</label>
+            <select class="form-control" id="status" formControlName="status"
+                    [ngClass]="{ 'is-invalid': submitted && form.status.errors }">
+              <option>ženatý</option>
+              <option>vydatá</option>
+              <option>slobodný</option>
+            </select>
+            <div *ngIf="submitted && form.status.errors" class="invalid-feedback">
+              <div *ngIf="form.status.errors.required">Rodinný stav je povinná položka</div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group float-right">
+              <button class="btn btn-primary mr-2 ">Uložiť</button>
+              <button class="btn-secondary btn  mr-0" id="closeModal" data-dismiss="modal">Zrušiť</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div [hidden]="!saved" class="alert alert-success " role="alert" style="position: absolute; top:5px; right: 5px">
+  <h4 class="alert-heading">Success!</h4>
+  <p>Pridanie nového pacienta prebehlo úspešne.</p>
+
+</div>
+{{patients | json}}

@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+
+      <button style="position: absolute; top: 0; right: 5px;
+      " [hidden]="!patient" type="button" class="close text-danger" (click)="hideDetail()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h3 class="text-center">Detail pacienta</h3>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="patient">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-12 text-right">
+
+              <img src="/assets/images/profile.jpg" class="rounded img-thumbnail" alt="..."
+                   style="max-height: 100px; width: auto">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="title">Titul</label>
+          <input type="text" class="form-control" id="title" [value]="patient.title" disabled>
+        </div>
+        <div class="form-group">
+          <label for="firstName">Meno:</label>
+          <input type="text" class="form-control" id="firstName" placeholder="Meno" [value]="patient.firstName"
+                 disabled>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Priezvisko</label>
+          <input type="text" class="form-control" id="lastName" placeholder="Priezvisko" [value]="patient.lastName"
+                 disabled>
+        </div>
+        <div class="form-group">
+          <label for="address">Adresa</label>
+          <input type="text" class="form-control" id="address" placeholder="Adresa" [value]="patient.address"
+                 disabled>
+        </div>
+        <div class="form-group">
+          <label for="idNum">Rodné číslo</label>
+          <input type="text" class="form-control" id="idNum" placeholder="Rodné číslo"
+                 [value]="patient.identificationNumber"
+                 disabled>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="gender">Pohlavie</label>
+            <input type="text" class="form-control" id="gender" placeholder="Pohlavie"
+                   [value]="patient.gender"
+                   disabled>
+          </div>
+          <div class="col">
+            <label for="status">Stav</label>
+            <input type="text" class="form-control" id="status" placeholder="Stav"
+                   [value]="patient.status"
+                   disabled>
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="!patient" class="alert alert-secondary">
+        <p>Pre zobrazenie detailu zvolte pacienta z tabulky</p>
+      </div>
+    </div>
+  </div>
+</div>
